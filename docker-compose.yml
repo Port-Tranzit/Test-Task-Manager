@@ -1,0 +1,35 @@
+services:
+  nginx:
+    image: nginx:stable-alpine
+    volumes:
+      - ./:/var/www/html
+      - ./.docker/server.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "${FORWARD_NGINX_PORT:-80}:80"
+    depends_on:
+      - fpm
+
+  fpm:
+    build:
+      context: ./.docker
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "${FORWARD_FPM_PORT:-9000}:9000"
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.1
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_DATABASE: ${DB_NAME:-test-task}
+      MYSQL_USER: ${DB_USER:-test-user}
+      MYSQL_PASSWORD: ${DB_PASS:-test}
+    command:
+      - mysqld
+      - '--character-set-server=utf8mb4'
+    volumes:
+      - ./.docker/runtime/mysql:/var/lib/mysql
+    ports:
+      - "${FORWARD_MYSQL_PORT:-3306}:3306"

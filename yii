@@ -1,0 +1,31 @@
+#!/usr/bin/env php
+<?php
+
+use yii\base\InvalidConfigException;
+
+ini_set("date.timezone",'Europe/Moscow');
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+define('YII_ENV', $_ENV['APP_ENV'] ?: 'prod');
+define('YII_DEBUG', $_ENV['APP_ENV'] !== 'prod');
+
+require_once __DIR__ . '/config/constants.php';
+require_once __DIR__ . '/vendor/yiisoft/yii2/Yii.php';
+
+$config = array_merge(
+    require __DIR__ . '/config/console.php',
+    require __DIR__ . '/config/app.php'
+);
+
+try {
+    $app = new yii\console\Application($config);
+    $exitCode = $app->run();
+
+    exit($exitCode);
+} catch (InvalidConfigException $e) {
+    echo $e->getMessage() . PHP_EOL;
+}
