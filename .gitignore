@@ -9,6 +9,9 @@ vendor
 # Include other .gitignore files
 !.gitignore
 
+# Include .docker directory
+!.docker/*
+
 # Include all source files
 !*.php
 !.env.example
