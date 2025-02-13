@@ -3,15 +3,16 @@
 namespace api\controllers;
 
 use api\formatters\ProjectFormatter;
-use App\Models\Project;
+// use App\Models\Project;
 use App\Services\Project\CreateProjectService;
 use App\Services\Project\DeleteProjectService;
+use App\Services\Project\ListProjectsService;
 use App\Services\ProjectUser\AddUserService;
 use App\Services\ProjectUser\RemoveUserService;
 use Brezgalov\ApiHelpers\v2\ApiGetAction;
 use Brezgalov\ApiHelpers\v2\ApiPostAction;
 use yii\filters\AccessControl;
-use yii\rest\IndexAction;
+// use yii\rest\IndexAction;
 
 class ProjectController extends BaseController
 {
@@ -48,12 +49,20 @@ class ProjectController extends BaseController
             'index' => [
                 'class' => ApiGetAction::class,
                 'service' => [
+                    'class' => ListProjectsService::class,
+                ],
+                'methodName' => ListProjectsService::METHOD_NAME,
+                'formatter' => ProjectFormatter::class,
+            ],
+            /* 'index' => [
+                'class' => ApiGetAction::class,
+                'service' => [
                     'class' => IndexAction::class,
                     'modelClass' => Project::class,
                 ],
                 'methodName' => 'run',
                 'formatter' => ProjectFormatter::class,
-            ],
+            ], */
             'create' => [
                 'class' => ApiPostAction::class,
                 'service' => CreateProjectService::class,

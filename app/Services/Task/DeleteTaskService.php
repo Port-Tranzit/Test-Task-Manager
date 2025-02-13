@@ -3,6 +3,7 @@
 namespace App\Services\Task;
 
 use App\Models\Task;
+use App\Repositories\ProjectRepository;
 use App\Services\BaseService;
 
 class DeleteTaskService extends BaseService
@@ -20,7 +21,7 @@ class DeleteTaskService extends BaseService
 
     public function deleteTask(): bool
     {
-        if ( !$this->validate() ) {
+        if (!$this->validate()) {
             return false;
         }
 
@@ -29,14 +30,21 @@ class DeleteTaskService extends BaseService
             'deleted_at' => null,
         ]);
 
-        if ( empty($task) ) {
+        if (empty($task)) {
             $this->addError('id', 'Задача не найдена');
+            return false;
+        }
+
+        // Запрет удаления задачи, если пользователь не является участником проекта или создателем задачи
+        $currentUserId = $this->getCurrentUserId();
+        if ($task->user_created_id !== $currentUserId || !ProjectRepository::userIsProjectOwner($task->project_id, $currentUserId)) {
+            $this->addError('id', 'Вы не можете удалить эту задачу');
             return false;
         }
 
         $task->deleted_at = date(DATETIME_FORMAT);
 
-        if ( !$task->save() ) {
+        if (!$task->save()) {
             $this->addErrors($task->errors);
             return false;
         }

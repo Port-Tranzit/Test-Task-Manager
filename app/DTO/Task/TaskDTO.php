@@ -11,6 +11,7 @@ class TaskDTO extends Model
     public int $id;
     public int $userCreatedId;
     public ?int $userAssignedId = null;
+    public int $priorityId;
     public string $status;
     public string $title;
     public ?string $description = null;
@@ -27,6 +28,7 @@ class TaskDTO extends Model
         $instance->id = $task->id;
         $instance->userCreatedId = $task->user_created_id;
         $instance->userAssignedId = $task->user_assigned_id;
+        $instance->priorityId = $task->priority_id;
         $instance->status = $task->status;
         $instance->title = $task->title;
         $instance->description = $task->description;

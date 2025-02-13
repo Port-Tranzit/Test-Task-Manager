@@ -1,52 +1,52 @@
 {
-  "type": "project",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "require": {
-    "php": ">=8.0.0",
-    "vlucas/phpdotenv": "*",
-    "ramsey/uuid": "^4.7",
-    "yiisoft/yii2": "~2.0.44",
-    "yiisoft/yii2-symfonymailer": "*",
-    "omnilight/yii2-scheduling": "dev-master",
-    "brezgalov/yii2-api-helpers": "dev-master",
-    "brezgalov/php-typed-collection": "dev-master"
-  },
-  "config": {
-    "process-timeout": 1800,
-    "platform-check": false,
-    "fxp-asset": {
-      "enabled": false
+    "type": "project",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.0.0",
+        "vlucas/phpdotenv": "*",
+        "ramsey/uuid": "^4.7",
+        "yiisoft/yii2": "~2.0.44",
+        "yiisoft/yii2-symfonymailer": "*",
+        "omnilight/yii2-scheduling": "dev-master",
+        "brezgalov/yii2-api-helpers": "dev-master",
+        "brezgalov/php-typed-collection": "dev-master"
     },
-    "allow-plugins": {
-      "yiisoft/yii2-composer": true
-    }
-  },
-  "scripts": {
-    "post-root-package-install": [
-      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-    ]
-  },
-  "extra": {
-    "yii\\composer\\Installer::postInstall": {
-      "setPermission": [
-        {
-          "api/web": "0777",
-          "yii": "0755"
+    "config": {
+        "process-timeout": 1800,
+        "platform-check": false,
+        "fxp-asset": {
+            "enabled": false
+        },
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
         }
-      ]
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ]
+    },
+    "extra": {
+        "yii\\composer\\Installer::postInstall": {
+            "setPermission": [
+                {
+                    "api/web": "0777",
+                    "yii": "0755"
+                }
+            ]
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "api\\": "api/",
+            "App\\": "app/"
+        }
     }
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://asset-packagist.org"
-    }
-  ],
-  "autoload": {
-    "psr-4": {
-      "api\\": "api/",
-      "App\\": "app/"
-    }
-  }
 }

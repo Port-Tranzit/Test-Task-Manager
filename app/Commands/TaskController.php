@@ -21,12 +21,14 @@ class TaskController extends Controller
 
         $count = count($expiredTasks);
 
-        echo "Found {$count} expired tasks..." . PHP_EOL;
+        echo 'Found ' . $count . ' expired tasks...' . PHP_EOL;
 
         foreach ($expiredTasks as $task) {
-            $task->deleted_at = date(DATETIME_FORMAT);
+            // Устанавливаем статус 'просрочена' для просроченной задачи
+            $task->status = 'expired';
+            // $task->deleted_at = date(DATETIME_FORMAT);
 
-            if ( !$task->save() ) {
+            if (!$task->save()) {
                 echo json_encode($task->getFirstErrors()) . PHP_EOL;
                 return ExitCode::UNSPECIFIED_ERROR;
             }

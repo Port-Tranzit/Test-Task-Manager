@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  * @property int $project_id
  * @property int $user_created_id
  * @property int|null $user_assigned_id
+ * @property int $priority_id
  * @property string $status
  * @property string $title
  * @property string|null $description
@@ -55,7 +56,7 @@ class Task extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['project_id', 'user_created_id', 'status', 'title'], 'required'],
+            [['project_id', 'user_created_id', 'status', 'priority_id', 'title'], 'required'],
             [['user_assigned_id', 'description', 'due_until', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
         ];
     }

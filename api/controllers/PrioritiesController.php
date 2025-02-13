@@ -2,15 +2,15 @@
 
 namespace api\controllers;
 
-use App\Services\Task\ChangeTaskStatusService;
-use App\Services\Task\CreateTaskService;
-use App\Services\Task\DeleteTaskService;
-use App\Services\Task\ListTasksForProjectService;
+use App\Services\Priorities\CreatePrioritiesService;
+use App\Services\Priorities\DeletePrioritiesService;
+use App\Services\Priorities\ListPrioritiesService;
+use App\Services\Priorities\UpdatePrioritiesService;
 use Brezgalov\ApiHelpers\v2\ApiGetAction;
 use Brezgalov\ApiHelpers\v2\ApiPostAction;
 use yii\filters\AccessControl;
 
-class TaskController extends BaseController
+class PrioritiesController extends BaseController
 {
     public function behaviors(): array
     {
@@ -24,8 +24,8 @@ class TaskController extends BaseController
                         'actions' => [
                             'list',
                             'create',
+                            'update',
                             'delete',
-                            'change-status',
                         ],
                     ],
                     [
@@ -43,23 +43,23 @@ class TaskController extends BaseController
         return array_merge(parent::actions(), [
             'list' => [
                 'class' => ApiGetAction::class,
-                'service' => ListTasksForProjectService::class,
-                'methodName' => ListTasksForProjectService::METHOD_NAME,
+                'service' => ListPrioritiesService::class,
+                'methodName' => ListPrioritiesService::METHOD_NAME,
             ],
             'create' => [
                 'class' => ApiPostAction::class,
-                'service' => CreateTaskService::class,
-                'methodName' => CreateTaskService::METHOD_NAME,
+                'service' => CreatePrioritiesService::class,
+                'methodName' => CreatePrioritiesService::METHOD_NAME,
+            ],
+            'update' => [
+                'class' => ApiPostAction::class,
+                'service' => UpdatePrioritiesService::class,
+                'methodName' => UpdatePrioritiesService::METHOD_NAME,
             ],
             'delete' => [
                 'class' => ApiPostAction::class,
-                'service' => DeleteTaskService::class,
-                'methodName' => DeleteTaskService::METHOD_NAME,
-            ],
-            'change-status' => [
-                'class' => ApiPostAction::class,
-                'service' => ChangeTaskStatusService::class,
-                'methodName' => ChangeTaskStatusService::METHOD_NAME,
+                'service' => DeletePrioritiesService::class,
+                'methodName' => DeletePrioritiesService::METHOD_NAME,
             ],
         ]);
     }

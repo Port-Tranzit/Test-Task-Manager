@@ -1,23 +1,5 @@
-# Ignore all, but scan all directories
-*
-!*/
-
-# Ignore IDE and vendor directories
 .idea
+.vscode
 vendor
-
-# Include other .gitignore files
-!.gitignore
-
-# Include .docker directory
-!.docker/*
-
-# Include all source files
-!*.php
-!.env.example
-!composer.json
-!composer.lock
-!docker-compose.yml
-!.gitlab-ci.yml
-!*.md
-!yii
+.env
+composer.lock
